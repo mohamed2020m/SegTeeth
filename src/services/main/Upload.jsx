@@ -24,8 +24,8 @@ function VTKViewer() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPredicted, setIsPredicted] = useState(false);
   const [data, setData] = useState(null)
-  const [hideParts, setHidePars] = useState(false)
-  const [error, setError] = useState(null)
+  const [fullScreen, setFullScreen] = useState(true)
+  // const [error, setError] = useState(null)
 
   useEffect(() => {
     const headerElement = document.querySelector('.header');
@@ -36,7 +36,7 @@ function VTKViewer() {
     if(footerElement){
       footerElement.style.display = 'none';
     }
-  }, [fileBlob, file])
+  }, [])
 
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -202,8 +202,11 @@ function VTKViewer() {
     setFile(null)
     setFileBlob(null)
     setIsPredicted(null)
-    setHidePars(false)
+    setFullScreen(false)
     setData(null)
+    if (formRef.current) {
+      formRef.current.reset();
+    }
     document.querySelector("#vtk-container").innerHTML = null;
     document.querySelector('#vtk-container').style.display = 'none'
   }
@@ -211,10 +214,12 @@ function VTKViewer() {
   const handleResizeWindow = () => {
     const headerElement = document.querySelector('.header');
     const footerElement = document.querySelector('.footer');
-    console.log(hideParts)
-    setHidePars(!hideParts);
-    console.log(hideParts)
-    if(!hideParts){
+    
+    console.log(fullScreen)
+    setFullScreen(!fullScreen);
+    console.log(fullScreen)
+
+    if(!fullScreen){
       if (headerElement) {
         headerElement.style.display = 'none';
       }
@@ -248,7 +253,7 @@ function VTKViewer() {
             className='text-white'
             onClick={handleResizeWindow}  
           >
-            {hideParts ?
+            {fullScreen ?
             <AiOutlineFullscreenExit/>
             :
             <AiOutlineFullscreen/>
@@ -314,7 +319,7 @@ function VTKViewer() {
             className='text-white'
             onClick={handleResizeWindow}  
           >
-            {hideParts ?
+            {fullScreen ?
              <AiOutlineFullscreenExit/>
              :
              <AiOutlineFullscreen/>
@@ -366,7 +371,7 @@ function VTKViewer() {
             className='text-white'
             onClick={handleResizeWindow}  
           >
-            {hideParts ?
+            {fullScreen ?
             <AiOutlineFullscreenExit/>
             :
             <AiOutlineFullscreen/>
