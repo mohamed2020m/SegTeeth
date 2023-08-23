@@ -36,7 +36,7 @@ function VTKViewer() {
     if(footerElement){
       footerElement.style.display = 'none';
     }
-  }, [])
+  }, [fileBlob, file])
 
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -69,9 +69,11 @@ function VTKViewer() {
 
 
   const loadVTPTest = (objData) => {
+    document.querySelector('#vtk-container').style.display = 'block'
     const vtkRenderScreen = vtkFullScreenRenderWindow.newInstance({
         container: document.querySelector('#vtk-container'),
-        background: [0.118, 0.161, 0.231]
+        background: [0.118, 0.161, 0.231],
+        height: 550,
     });
     
     // Create a VTP reader
@@ -201,7 +203,9 @@ function VTKViewer() {
     setFileBlob(null)
     setIsPredicted(null)
     setHidePars(false)
+    setData(null)
     document.querySelector("#vtk-container").innerHTML = null;
+    document.querySelector('#vtk-container').style.display = 'none'
   }
 
   const handleResizeWindow = () => {
@@ -234,6 +238,7 @@ function VTKViewer() {
     }
     setFile(null);
   };
+
 
   return (
     <>    
@@ -284,7 +289,7 @@ function VTKViewer() {
                     Supported files
                   </div>
                   <div className="text-center text-slate-300 text-md py-3">
-                    OBJ, STL, PLY, VTP, GLB, GLTG, FBX
+                    Only OBJ files are Supported at the moment
                   </div>
                 </div>
               </form>
@@ -320,7 +325,7 @@ function VTKViewer() {
           <button 
             onClick={handlePredictBtn} 
             // type="submit" form="upload-form"
-            className="px-10 py-3.5 my-4 bg-slate-500 hover:bg-slate-400 text-center text-white text-base font-semibold leading-tight mx-2 rounded-lg">
+            className="px-10 py-3.5 my-4 bg-slate-500 hover:bg-emerald-500 text-center text-white text-base font-semibold leading-tight mx-2 rounded-lg">
               Start Prediction
           </button>
         </div>
@@ -338,7 +343,7 @@ function VTKViewer() {
               <HashLoader color="#36d7b7" />
             </div>
             <div>
-              <p className="text-md text-slate-100">
+              <p className="text-md text-slate-100 my-3">
                   TeethSeg is predicting...
               </p>
             </div>
@@ -346,7 +351,7 @@ function VTKViewer() {
         </div>
       : null}
        
-      <div className={`${isPredicted ? 'block' : 'hidden'} w-full h-screen scroll-smooth bg-slate-800`}>
+      <div className={`${isPredicted ? 'block' : 'hidden'} w-full scroll-smooth bg-slate-800`}>
         <div className='p-3 m-4 flex justify-between'>
           <button 
             className="bg-slate-300 hover:bg-slate-500 hover:text-white px-3 py-1 rounded" 
@@ -382,9 +387,6 @@ function VTKViewer() {
           </button> 
         </div>
 
-        {/* <div className="flex justify-center flex-box flex-col relative">
-        </div>  
-         */}
         <div className="text-white text-3xl font-semibold text-center">
           Predicted segmentation:
         </div>
