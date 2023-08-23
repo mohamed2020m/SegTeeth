@@ -198,8 +198,10 @@ function VTKViewer() {
 
   const handleBackBtn = () => {
     setFile(null)
+    setFileBlob(null)
     setIsPredicted(null)
     setHidePars(false)
+    document.querySelector("#vtk-container").innerHTML = null;
   }
 
   const handleResizeWindow = () => {
@@ -387,10 +389,8 @@ function VTKViewer() {
           Predicted segmentation:
         </div>
 
-        <div id="vtk-container" className=''></div>
-        <div className="w-full">
-        </div>
       </div>
+      <div id="vtk-container" className='w-full'></div>
     </>
   );
 }
