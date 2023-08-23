@@ -9,6 +9,7 @@ function Start() {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 
+	
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
